@@ -1,0 +1,11 @@
+setwd("~/ExploratoryDataAnalysis/ExData_Plotting1")
+file<-"~/ExploratoryDataAnalysis/data/household_power_consumption.txt"
+filedata<-read.table(file,header=T,sep=";",na.strings="?")
+sub.filedata = subset(filedata, as.Date(Date, "%d/%m/%Y") >= as.Date('2007-02-01') & as.Date(Date, "%d/%m/%Y") <= as.Date('2007-02-02') )
+rm(filedata)
+sub.filedata$DateTime<-paste(sub.filedata$Date,sub.filedata$Time)
+sub.filedata$DateTime<-strptime(sub.filedata$DateTime, "%d/%m/%Y %H:%M:%S")
+png("plot2.png",width=480,height=480)
+with(sub.filedata,plot(DateTime,Global_active_power, ylab="Global Active Power (kilowatts)",xlab="",type="n"))
+with(sub.filedata,lines(DateTime,Global_active_power))
+dev.off()
